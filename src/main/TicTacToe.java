@@ -5,6 +5,9 @@ import java.util.Scanner;
 public class TicTacToe {
 
     private static int[][] taken = new int[3][3];
+    private static int player = 0;
+    private static int cpu = 1;
+    private static int turn = 0;
 
     public static void printGameBoard(char[][] board){
 
@@ -17,85 +20,73 @@ public class TicTacToe {
         }
     }
 
+    public static void turnChanger(int takenX, int takenY){
+
+        if(taken[takenX][takenY] == 0){
+            if(turn == player)
+                turn = cpu;
+            else if(turn == cpu)
+                turn = player;
+        }
+        else if(taken[takenX][takenY] == 1){
+            System.out.println("Spot taken. Try another");
+            if(turn == player)
+                turn = player;
+            else if(turn == cpu)
+                turn = cpu;
+        }
+    }
+
+    public static void boardGridCase(char[][] board, char symbol, int takenX, int takenY, int boardX, int boardY){
+        if(taken[takenX][takenY] == 0) {
+            board[boardX][boardY] = symbol;
+            turnChanger(takenX,takenY);
+        }
+        else
+            turnChanger(takenX,takenY);
+        taken[takenX][takenY] = 1;
+    }
+
     public static void placePiece(char[][] board, int choice, String user){
 
         char symbol = 'X';
 
-        if(user.equals("player"))
+        if(turn == 1)
             symbol = 'X';
-        else
+        else if(turn == 0)
             symbol = 'O';
 
         switch(choice){
             case 1:
-                if(taken[0][0] == 0)
-                    board[0][0] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[0][0] = 1;
+                boardGridCase(board, symbol, 0, 0, 0, 0);
                 break;
             case 2:
-                if(taken[0][1] == 0)
-                    board[0][2] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[0][1] = 1;
+                boardGridCase(board, symbol, 0, 1, 0, 2);
                 break;
             case 3:
-                if(taken[0][2] == 0)
-                    board[0][4] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[0][2] = 1;
+                boardGridCase(board, symbol, 0, 2, 0, 4);
                 break;
             case 4:
-                if(taken[1][0] == 0)
-                    board[2][0] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[1][0] = 1;
+                boardGridCase(board, symbol, 1, 0, 2, 0);
                 break;
             case 5:
-                if(taken[1][1] == 0)
-                    board[2][2] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[1][1] = 1;
+                boardGridCase(board, symbol, 1, 1, 2, 2);
                 break;
             case 6:
-                if(taken[1][2] == 0)
-                    board[2][4] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[1][2] = 1;
+                boardGridCase(board, symbol, 1, 2, 2, 4);
                 break;
             case 7:
-                if(taken[2][0] == 0)
-                    board[4][0] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[2][0] = 1;
+                boardGridCase(board, symbol, 2, 0, 4, 0);
                 break;
             case 8:
-                if(taken[2][1] == 0)
-                    board[4][2] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[2][1] = 1;
+                boardGridCase(board, symbol, 2, 1, 4, 2);
                 break;
             case 9:
-                if(taken[2][2] == 0)
-                    board[4][4] = symbol;
-                else
-                    System.out.println("Spot taken");
-                taken[2][2] = 1;
+                boardGridCase(board, symbol, 2, 2, 4, 4);
                 break;
         }
     }
 
-    public static void checkSpot(char[][] board, int choice){
-
-    }
 
     public static void main(String[] args){
 
@@ -129,6 +120,8 @@ public class TicTacToe {
                 turn = 0;
             }
             printGameBoard(board);
+
+            //checks to see if board is full
             boardFull = true;
             for(int[] row : taken){
                 for(int c : row){
