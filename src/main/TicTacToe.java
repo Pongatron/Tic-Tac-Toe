@@ -1,13 +1,11 @@
 package main;
 
-import java.util.Scanner;
+import java.util.*;
 
 public class TicTacToe {
 
-    private static int[][] taken = new int[3][3];
-    private static int player = 0;
-    private static int cpu = 1;
-    private static int turn = 0;
+    private static ArrayList<Integer> playerPositions = new ArrayList<>();
+    private static ArrayList<Integer> cpuPositions = new ArrayList<>();
 
     public static void printGameBoard(char[][] board){
 
@@ -20,71 +18,86 @@ public class TicTacToe {
         }
     }
 
-    public static void turnChanger(int takenX, int takenY){
 
-        if(taken[takenX][takenY] == 0){
-            if(turn == player)
-                turn = cpu;
-            else if(turn == cpu)
-                turn = player;
-        }
-        else if(taken[takenX][takenY] == 1){
-            System.out.println("Spot taken. Try another");
-            if(turn == player)
-                turn = player;
-            else if(turn == cpu)
-                turn = cpu;
-        }
-    }
-
-    public static void boardGridCase(char[][] board, char symbol, int takenX, int takenY, int boardX, int boardY){
-        if(taken[takenX][takenY] == 0) {
-            board[boardX][boardY] = symbol;
-            turnChanger(takenX,takenY);
-        }
-        else
-            turnChanger(takenX,takenY);
-        taken[takenX][takenY] = 1;
-    }
-
-    public static void placePiece(char[][] board, int choice, String user){
+    public static void placePiece(char[][] board, int pos, String user){
 
         char symbol = 'X';
 
-        if(turn == 1)
+        if(user.equals("player")) {
             symbol = 'X';
-        else if(turn == 0)
+            playerPositions.add(pos);
+        }
+        else if(user.equals("cpu")) {
             symbol = 'O';
+            cpuPositions.add(pos);
+        }
 
-        switch(choice){
+        switch(pos){
             case 1:
-                boardGridCase(board, symbol, 0, 0, 0, 0);
+                board[0][0] = symbol;
                 break;
             case 2:
-                boardGridCase(board, symbol, 0, 1, 0, 2);
+                board[0][2] = symbol;
                 break;
             case 3:
-                boardGridCase(board, symbol, 0, 2, 0, 4);
+                board[0][4] = symbol;
                 break;
             case 4:
-                boardGridCase(board, symbol, 1, 0, 2, 0);
+                board[2][0] = symbol;
                 break;
             case 5:
-                boardGridCase(board, symbol, 1, 1, 2, 2);
+                board[2][2] = symbol;
                 break;
             case 6:
-                boardGridCase(board, symbol, 1, 2, 2, 4);
+                board[2][4] = symbol;
                 break;
             case 7:
-                boardGridCase(board, symbol, 2, 0, 4, 0);
+                board[4][0] = symbol;
                 break;
             case 8:
-                boardGridCase(board, symbol, 2, 1, 4, 2);
+                board[4][2] = symbol;
                 break;
             case 9:
-                boardGridCase(board, symbol, 2, 2, 4, 4);
+                board[4][4] = symbol;
+
+                break;
+            default:
                 break;
         }
+    }
+
+    public static String checkWinner(){
+        List topRow = Arrays.asList(1,2,3);
+        List midRow = Arrays.asList(4,5,6);
+        List botRow = Arrays.asList(7,8,9);
+        List leftCol = Arrays.asList(1,4,7);
+        List midCol = Arrays.asList(2,5,8);
+        List rightCol = Arrays.asList(3,6,9);
+        List cross1 = Arrays.asList(1,5,9);
+        List cross2 = Arrays.asList(3,5,7);
+
+        List<List> win = new ArrayList<List>();
+        win.add(topRow);
+        win.add(midRow);
+        win.add(botRow);
+        win.add(leftCol);
+        win.add(midCol);
+        win.add(rightCol);
+        win.add(cross1);
+        win.add(cross2);
+
+        for(List l : win){
+            if(playerPositions.containsAll(l)){
+                return "Player Wins";
+            }
+            else if(cpuPositions.containsAll(l)){
+                return "CPU Wins";
+            }
+            else if(playerPositions.size() + cpuPositions.size() == 9){
+                return "It's a Tie";
+            }
+        }
+        return "";
     }
 
 
@@ -96,47 +109,37 @@ public class TicTacToe {
                 {'-', '+', '-', '|', '-'},
                 {' ', '|', ' ', '|', ' '}};
 
-        printGameBoard(board);
-
-        Scanner k = new Scanner(System.in);
-
-        int turn = 0;
-        boolean boardFull = false;
-        while(!boardFull){
+        while(true){
+            Scanner k = new Scanner(System.in);
+            printGameBoard(board);
             System.out.println("Choose spot on grid by typing a number 1 - 9");
-            int choice = k.nextInt();
+            int playerPos = k.nextInt();
 
             //Checks for valid number
-            while(choice < 1 || choice > 9){
-                System.out.println("Invalid Number\nEnter a number between 1 - 9");
-                choice = k.nextInt();
+            while(playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)){
+                System.out.println("Position Taken!\nEnter a number between 1 - 9");
+                printGameBoard(board);
+                playerPos = k.nextInt();
             }
-            if(turn == 0){
-                placePiece(board, choice, "player");
-                turn = 1;
+            placePiece(board, playerPos, "player");
+            if(!checkWinner().isEmpty()) {
+                printGameBoard(board);
+                System.out.println(checkWinner());
+                break;
             }
-            else if (turn == 1) {
-                placePiece(board, choice, "cpu");
-                turn = 0;
-            }
-            printGameBoard(board);
 
-            //checks to see if board is full
-            boardFull = true;
-            for(int[] row : taken){
-                for(int c : row){
-                    if (c == 0) {
-                        boardFull = false;
-                        break;
-                    }
-                }
+            Random rand = new Random();
+            int cpuPos = rand.nextInt(9) + 1;
+            while(playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)){
+                cpuPos = rand.nextInt(9) + 1;
+            }
+            placePiece(board, cpuPos, "cpu");
+
+            if(!checkWinner().isEmpty()) {
+                printGameBoard(board);
+                System.out.println(checkWinner());
+                break;
             }
         }
-
-
-
-
-
     }
-
 }
