@@ -133,6 +133,12 @@ public class TicTacToe {
         return "";
     }
 
+    public void resetGame(){
+        playerPositions.clear();
+        cpuPositions.clear();
+
+    }
+
     public ArrayList<Integer> getPlayerPositions(){return playerPositions;}
     public ArrayList<Integer> getCpuPositions(){return cpuPositions;}
 

@@ -153,6 +153,24 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         }
     }
 
+    public void restartGame(){
+        label1.setText("");
+        label2.setText("");
+        label3.setText("");
+        label4.setText("");
+        label5.setText("");
+        label6.setText("");
+        label7.setText("");
+        label8.setText("");
+        label9.setText("");
+
+        bottomText.setText("");
+
+        game.resetGame();
+
+        gameOver = false;
+    }
+
     @Override
     public void mouseClicked(MouseEvent e) {
 
@@ -208,8 +226,7 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         if(e.getSource() == restartButton){
-            this.dispose();
-            MyFrame myFrame = new MyFrame();
+            restartGame();
         }
     }
 
