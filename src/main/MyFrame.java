@@ -23,6 +23,7 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
     boolean gameOver = false;
     Font boardFont = new Font("Arial", Font.BOLD, 150);
     Font titleFont = new Font("Arial", Font.BOLD, 80);
+    JLabel bottom;
 
     public MyFrame(){
 
@@ -53,8 +54,8 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
 
         JPanel left = new JPanel();
         JPanel right = new JPanel();
-        JLabel top = new JLabel("Tic Tac Toe", JLabel.CENTER);
-        JPanel bottom = new JPanel();
+        JLabel top = new JLabel("Tic-Tac-Toe", JLabel.CENTER);
+        bottom = new JLabel();
 
         left.setPreferredSize(new Dimension(100,100));
         right.setPreferredSize(new Dimension(100,100));
@@ -107,112 +108,43 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         }
     }
 
-    public void decideLabel(MouseEvent e, JLabel label, int pos){
+    public void decideLabelForPosition(MouseEvent e, JLabel label, int pos){
         if(!gameOver && e.getSource() == label && !(game.getPlayerPositions().contains(pos) || game.getCpuPositions().contains(pos))){
             label.setText("X");
             game.placePiece(board, pos, "player");
             if(game.checkWinner().isEmpty())
                 displayCPU(game.addCpuTurn(board));
-            else{
+            if(!game.checkWinner().isEmpty()){
                 gameOver = true;
-                System.out.println(game.checkWinner());
+                bottom.setText(game.checkWinner());
             }
+        }
+    }
+
+    public void decideLabelForHighlight(MouseEvent e, JLabel label, int pos){
+        if(e.getSource() == label && !(game.getPlayerPositions().contains(pos) || game.getCpuPositions().contains(pos))){
+            label.setBackground(Color.gray);
+        }
+    }
+
+    public void decideLabelForUnHighlight(MouseEvent e, JLabel label){
+        if(e.getSource() == label){
+            label.setBackground(Color.white);
         }
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        decideLabel(e, label1, 1);
-        decideLabel(e, label2, 2);
-        decideLabel(e, label3, 3);
-        decideLabel(e, label4, 4);
-        decideLabel(e, label5, 5);
-        decideLabel(e, label6, 6);
-        decideLabel(e, label7, 7);
-        decideLabel(e, label8, 8);
-        decideLabel(e, label9, 9);
-
-        /*if(!gameOver && e.getSource() == label2 && !(game.getPlayerPositions().contains(2) || game.getCpuPositions().contains(2))){
-            label2.setText("X");
-            game.placePiece(board, 2, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }
-        else if(!gameOver && e.getSource() == label3 && !(game.getPlayerPositions().contains(3) || game.getCpuPositions().contains(3))){
-            label3.setText("X");
-            game.placePiece(board, 3, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }
-        else if(!gameOver && e.getSource() == label4 && !(game.getPlayerPositions().contains(4) || game.getCpuPositions().contains(4))){
-            label4.setText("X");
-            game.placePiece(board, 4, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }
-        else if(!gameOver && e.getSource() == label5 && !(game.getPlayerPositions().contains(5) || game.getCpuPositions().contains(5))){
-            label5.setText("X");
-            game.placePiece(board, 5, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }
-        else if(!gameOver && e.getSource() == label6 && !(game.getPlayerPositions().contains(6) || game.getCpuPositions().contains(6))){
-            label6.setText("X");
-            game.placePiece(board, 6, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }
-        else if(!gameOver && e.getSource() == label7 && !(game.getPlayerPositions().contains(7) || game.getCpuPositions().contains(7))){
-            label7.setText("X");
-            game.placePiece(board, 7, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }
-        else if(!gameOver && e.getSource() == label8 && !(game.getPlayerPositions().contains(8) || game.getCpuPositions().contains(8))){
-            label8.setText("X");
-            game.placePiece(board, 8, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }
-        else if(!gameOver && e.getSource() == label9 && !(game.getPlayerPositions().contains(9) || game.getCpuPositions().contains(9))){
-            label9.setText("X");
-            game.placePiece(board, 9, "player");
-            if(game.checkWinner().isEmpty())
-                displayCPU(game.addCpuTurn(board));
-            else{
-                gameOver = true;
-                System.out.println(game.checkWinner());
-            }
-        }*/
+        decideLabelForPosition(e, label1, 1);
+        decideLabelForPosition(e, label2, 2);
+        decideLabelForPosition(e, label3, 3);
+        decideLabelForPosition(e, label4, 4);
+        decideLabelForPosition(e, label5, 5);
+        decideLabelForPosition(e, label6, 6);
+        decideLabelForPosition(e, label7, 7);
+        decideLabelForPosition(e, label8, 8);
+        decideLabelForPosition(e, label9, 9);
 
     }
 
@@ -228,65 +160,29 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
 
     @Override
     public void mouseEntered(MouseEvent e) {
-        if(e.getSource() == label1 && !(game.getPlayerPositions().contains(1) || game.getCpuPositions().contains(1))){
-            label1.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label2 && !(game.getPlayerPositions().contains(2) || game.getCpuPositions().contains(2))){
-            label2.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label3 && !(game.getPlayerPositions().contains(3) || game.getCpuPositions().contains(3))){
-            label3.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label4 && !(game.getPlayerPositions().contains(4) || game.getCpuPositions().contains(4))){
-            label4.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label5 && !(game.getPlayerPositions().contains(5) || game.getCpuPositions().contains(5))){
-            label5.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label6 && !(game.getPlayerPositions().contains(6) || game.getCpuPositions().contains(6))){
-            label6.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label7 && !(game.getPlayerPositions().contains(7) || game.getCpuPositions().contains(7))){
-            label7.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label8 && !(game.getPlayerPositions().contains(8) || game.getCpuPositions().contains(8))){
-            label8.setBackground(Color.gray);
-        }
-        else if(e.getSource() == label9 && !(game.getPlayerPositions().contains(9) || game.getCpuPositions().contains(9))){
-            label9.setBackground(Color.gray);
-        }
+        decideLabelForHighlight(e, label1, 1);
+        decideLabelForHighlight(e, label2, 2);
+        decideLabelForHighlight(e, label3, 3);
+        decideLabelForHighlight(e, label4, 4);
+        decideLabelForHighlight(e, label5, 5);
+        decideLabelForHighlight(e, label6, 6);
+        decideLabelForHighlight(e, label7, 7);
+        decideLabelForHighlight(e, label8, 8);
+        decideLabelForHighlight(e, label9, 9);
 
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if(e.getSource() == label1){
-            label1.setBackground(Color.white);
-        }
-        else if(e.getSource() == label2){
-            label2.setBackground(Color.white);
-        }
-        else if(e.getSource() == label3){
-            label3.setBackground(Color.white);
-        }
-        else if(e.getSource() == label4){
-            label4.setBackground(Color.white);
-        }
-        else if(e.getSource() == label5){
-            label5.setBackground(Color.white);
-        }
-        else if(e.getSource() == label6){
-            label6.setBackground(Color.white);
-        }
-        else if(e.getSource() == label7){
-            label7.setBackground(Color.white);
-        }
-        else if(e.getSource() == label8){
-            label8.setBackground(Color.white);
-        }
-        else if(e.getSource() == label9){
-            label9.setBackground(Color.white);
-        }
+        decideLabelForUnHighlight(e, label1);
+        decideLabelForUnHighlight(e, label2);
+        decideLabelForUnHighlight(e, label3);
+        decideLabelForUnHighlight(e, label4);
+        decideLabelForUnHighlight(e, label5);
+        decideLabelForUnHighlight(e, label6);
+        decideLabelForUnHighlight(e, label7);
+        decideLabelForUnHighlight(e, label8);
+        decideLabelForUnHighlight(e, label9);
     }
 
     @Override

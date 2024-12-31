@@ -11,9 +11,40 @@ public class TicTacToe {
     private static ArrayList<Integer> playerPositions;
     private static ArrayList<Integer> cpuPositions;
 
+    List topRow;
+    List midRow;
+    List botRow;
+    List leftCol;
+    List midCol;
+    List rightCol;
+    List cross1;
+    List cross2;
+
+    List<List> win;
+
+
     public TicTacToe(){
         playerPositions = new ArrayList<>();
         cpuPositions = new ArrayList<>();
+
+        topRow = Arrays.asList(1,2,3);
+        midRow = Arrays.asList(4,5,6);
+        botRow = Arrays.asList(7,8,9);
+        leftCol = Arrays.asList(1,4,7);
+        midCol = Arrays.asList(2,5,8);
+        rightCol = Arrays.asList(3,6,9);
+        cross1 = Arrays.asList(1,5,9);
+        cross2 = Arrays.asList(3,5,7);
+
+        win = new ArrayList<List>();
+        win.add(topRow);
+        win.add(midRow);
+        win.add(botRow);
+        win.add(leftCol);
+        win.add(midCol);
+        win.add(rightCol);
+        win.add(cross1);
+        win.add(cross2);
     }
 
     public void printGameBoard(char[][] board){
@@ -113,7 +144,7 @@ public class TicTacToe {
             else if(cpuPositions.containsAll(l)){
                 return "CPU Wins";
             }
-            else if(playerPositions.size() + cpuPositions.size() == 9){
+            else if(!(playerPositions.containsAll(l) || cpuPositions.containsAll(l)) && (playerPositions.size() + cpuPositions.size() == 9)){
                 return "It's a Tie";
             }
         }
@@ -128,43 +159,5 @@ public class TicTacToe {
 
         MyFrame frame = new MyFrame();
 
-       /* char[][] board = {{' ', '|', ' ', '|', ' '},
-                {'-', '+', '-', '|', '-'},
-                {' ', '|', ' ', '|', ' '},
-                {'-', '+', '-', '|', '-'},
-                {' ', '|', ' ', '|', ' '}};
-
-        while(true){
-            Scanner k = new Scanner(System.in);
-            printGameBoard(board);
-            System.out.println("Choose spot on grid by typing a number 1 - 9");
-            int playerPos = k.nextInt();
-
-            //Checks for valid number
-            while(playerPositions.contains(playerPos) || cpuPositions.contains(playerPos)){
-                System.out.println("Position Taken!\nEnter a number between 1 - 9");
-                printGameBoard(board);
-                playerPos = k.nextInt();
-            }
-            placePiece(board, playerPos, "player");
-            if(!checkWinner().isEmpty()) {
-                printGameBoard(board);
-                System.out.println(checkWinner());
-                break;
-            }
-
-            Random rand = new Random();
-            int cpuPos = rand.nextInt(9) + 1;
-            while(playerPositions.contains(cpuPos) || cpuPositions.contains(cpuPos)){
-                cpuPos = rand.nextInt(9) + 1;
-            }
-            placePiece(board, cpuPos, "cpu");
-
-            if(!checkWinner().isEmpty()) {
-                printGameBoard(board);
-                System.out.println(checkWinner());
-                break;
-            }
-        }*/
     }
 }
