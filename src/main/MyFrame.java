@@ -22,6 +22,7 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
             {' ', '|', ' ', '|', ' '},
             {'-', '+', '-', '|', '-'},
             {' ', '|', ' ', '|', ' '}};
+    boolean gameOver = false;
 
     public MyFrame(){
 
@@ -154,50 +155,95 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
-        if(e.getSource() == label1 && !(game.getPlayerPositions().contains(1) || game.getCpuPositions().contains(1))){
+        if(!gameOver && e.getSource() == label1 && !(game.getPlayerPositions().contains(1) || game.getCpuPositions().contains(1))){
             label1.setText("X");
             game.placePiece(board, 1, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label2 && !(game.getPlayerPositions().contains(2) || game.getCpuPositions().contains(2))){
+        else if(!gameOver && e.getSource() == label2 && !(game.getPlayerPositions().contains(2) || game.getCpuPositions().contains(2))){
             label2.setText("X");
             game.placePiece(board, 2, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label3 && !(game.getPlayerPositions().contains(3) || game.getCpuPositions().contains(3))){
+        else if(!gameOver && e.getSource() == label3 && !(game.getPlayerPositions().contains(3) || game.getCpuPositions().contains(3))){
             label3.setText("X");
             game.placePiece(board, 3, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label4 && !(game.getPlayerPositions().contains(4) || game.getCpuPositions().contains(4))){
+        else if(!gameOver && e.getSource() == label4 && !(game.getPlayerPositions().contains(4) || game.getCpuPositions().contains(4))){
             label4.setText("X");
             game.placePiece(board, 4, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label5 && !(game.getPlayerPositions().contains(5) || game.getCpuPositions().contains(5))){
+        else if(!gameOver && e.getSource() == label5 && !(game.getPlayerPositions().contains(5) || game.getCpuPositions().contains(5))){
             label5.setText("X");
             game.placePiece(board, 5, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label6 && !(game.getPlayerPositions().contains(6) || game.getCpuPositions().contains(6))){
+        else if(!gameOver && e.getSource() == label6 && !(game.getPlayerPositions().contains(6) || game.getCpuPositions().contains(6))){
             label6.setText("X");
             game.placePiece(board, 6, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label7 && !(game.getPlayerPositions().contains(7) || game.getCpuPositions().contains(7))){
+        else if(!gameOver && e.getSource() == label7 && !(game.getPlayerPositions().contains(7) || game.getCpuPositions().contains(7))){
             label7.setText("X");
             game.placePiece(board, 7, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label8 && !(game.getPlayerPositions().contains(8) || game.getCpuPositions().contains(8))){
+        else if(!gameOver && e.getSource() == label8 && !(game.getPlayerPositions().contains(8) || game.getCpuPositions().contains(8))){
             label8.setText("X");
             game.placePiece(board, 8, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
-        else if(e.getSource() == label9 && !(game.getPlayerPositions().contains(9) || game.getCpuPositions().contains(9))){
+        else if(!gameOver && e.getSource() == label9 && !(game.getPlayerPositions().contains(9) || game.getCpuPositions().contains(9))){
             label9.setText("X");
             game.placePiece(board, 9, "player");
-            displayCPU(game.addCpuTurn(board));
+            if(game.checkWinner() == "")
+                displayCPU(game.addCpuTurn(board));
+            else{
+                gameOver = true;
+                System.out.println(game.checkWinner());
+            }
         }
 
     }
