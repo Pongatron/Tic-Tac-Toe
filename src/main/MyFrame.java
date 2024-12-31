@@ -23,7 +23,9 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
     boolean gameOver = false;
     Font boardFont = new Font("Arial", Font.BOLD, 150);
     Font titleFont = new Font("Arial", Font.BOLD, 80);
-    JLabel bottom;
+    Font winFont = new Font("Arial", Font.BOLD, 50);
+    JLabel bottomText;
+    JButton restartButton;
 
     public MyFrame(){
 
@@ -55,7 +57,10 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         JPanel left = new JPanel();
         JPanel right = new JPanel();
         JLabel top = new JLabel("Tic-Tac-Toe", JLabel.CENTER);
-        bottom = new JLabel();
+        JPanel bottom = new JPanel();
+        bottomText = new JLabel("", JLabel.CENTER);
+
+        bottom.setLayout(new BorderLayout());
 
         left.setPreferredSize(new Dimension(100,100));
         right.setPreferredSize(new Dimension(100,100));
@@ -63,6 +68,18 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         bottom.setPreferredSize(new Dimension(100,100));
 
         top.setFont(titleFont);
+        bottomText.setFont(winFont);
+
+        restartButton = new JButton("Restart");
+        restartButton.setFont(new Font("Arial", Font.BOLD, 30));
+        restartButton.setFocusable(false);
+        restartButton.setBackground(new Color(0x0c7ef7));
+        restartButton.setForeground(Color.white);
+        restartButton.setSize(100, 40);
+        restartButton.addActionListener(this);
+
+        bottom.add(bottomText, BorderLayout.NORTH);
+        bottom.add(restartButton, BorderLayout.SOUTH);
 
         this.add(panel, BorderLayout.CENTER);
         this.add(left, BorderLayout.WEST);
@@ -72,7 +89,6 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
 
 
 
-        //this.pack();
         this.setVisible(true);
     }
 
@@ -112,11 +128,15 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         if(!gameOver && e.getSource() == label && !(game.getPlayerPositions().contains(pos) || game.getCpuPositions().contains(pos))){
             label.setText("X");
             game.placePiece(board, pos, "player");
+            if(!game.checkWinner().isEmpty()){
+                gameOver = true;
+                bottomText.setText(game.checkWinner());
+            }
             if(game.checkWinner().isEmpty())
                 displayCPU(game.addCpuTurn(board));
             if(!game.checkWinner().isEmpty()){
                 gameOver = true;
-                bottom.setText(game.checkWinner());
+                bottomText.setText(game.checkWinner());
             }
         }
     }
@@ -187,7 +207,10 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        if(e.getSource() == restartButton){
+            this.dispose();
+            MyFrame myFrame = new MyFrame();
+        }
     }
 
     public void createGridLabels(){

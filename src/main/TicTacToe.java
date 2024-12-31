@@ -11,16 +11,16 @@ public class TicTacToe {
     private static ArrayList<Integer> playerPositions;
     private static ArrayList<Integer> cpuPositions;
 
-    List topRow;
-    List midRow;
-    List botRow;
-    List leftCol;
-    List midCol;
-    List rightCol;
-    List cross1;
-    List cross2;
+    List<Integer> topRow;
+    List<Integer> midRow;
+    List<Integer> botRow;
+    List<Integer> leftCol;
+    List<Integer> midCol;
+    List<Integer> rightCol;
+    List<Integer> cross1;
+    List<Integer> cross2;
 
-    List<List> win;
+    List<List<Integer>> win;
 
 
     public TicTacToe(){
@@ -36,7 +36,7 @@ public class TicTacToe {
         cross1 = Arrays.asList(1,5,9);
         cross2 = Arrays.asList(3,5,7);
 
-        win = new ArrayList<List>();
+        win = new ArrayList<>();
         win.add(topRow);
         win.add(midRow);
         win.add(botRow);
@@ -118,35 +118,17 @@ public class TicTacToe {
     }
 
     public String checkWinner(){
-        List topRow = Arrays.asList(1,2,3);
-        List midRow = Arrays.asList(4,5,6);
-        List botRow = Arrays.asList(7,8,9);
-        List leftCol = Arrays.asList(1,4,7);
-        List midCol = Arrays.asList(2,5,8);
-        List rightCol = Arrays.asList(3,6,9);
-        List cross1 = Arrays.asList(1,5,9);
-        List cross2 = Arrays.asList(3,5,7);
 
-        List<List> win = new ArrayList<List>();
-        win.add(topRow);
-        win.add(midRow);
-        win.add(botRow);
-        win.add(leftCol);
-        win.add(midCol);
-        win.add(rightCol);
-        win.add(cross1);
-        win.add(cross2);
-
-        for(List l : win){
+        for(List<Integer> l : win){
             if(playerPositions.containsAll(l)){
                 return "Player Wins";
             }
             else if(cpuPositions.containsAll(l)){
                 return "CPU Wins";
             }
-            else if(!(playerPositions.containsAll(l) || cpuPositions.containsAll(l)) && (playerPositions.size() + cpuPositions.size() == 9)){
-                return "It's a Tie";
-            }
+        }
+        if((playerPositions.size() + cpuPositions.size() == 9)){
+            return "It's a Tie";
         }
         return "";
     }
