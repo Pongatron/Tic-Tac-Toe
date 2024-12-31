@@ -1,8 +1,5 @@
 package main;
 
-import javax.swing.*;
-import javax.swing.border.Border;
-import java.awt.*;
 import java.util.*;
 import java.util.List;
 
@@ -22,7 +19,9 @@ public class TicTacToe {
 
     List<List<Integer>> win;
 
-
+    /**
+     * Class constructor
+     */
     public TicTacToe(){
         playerPositions = new ArrayList<>();
         cpuPositions = new ArrayList<>();
@@ -47,6 +46,10 @@ public class TicTacToe {
         win.add(cross2);
     }
 
+    /**
+     * Prints the game board array to the console. used for testing
+     * @param board the 2D array that shows the game board
+     */
     public void printGameBoard(char[][] board){
 
         //Prints out game board
@@ -58,7 +61,12 @@ public class TicTacToe {
         }
     }
 
-
+    /**
+     * Adds a piece to the game board and stores visited positions for cpu and player
+     * @param board the 2D array that shows the game board
+     * @param pos the selected position ranging between 1 and 9
+     * @param user used to identify if a position is added to the player or the cpu
+     */
     public void placePiece(char[][] board, int pos, String user){
 
         char symbol = 'X';
@@ -106,6 +114,11 @@ public class TicTacToe {
         }
     }
 
+    /**
+     * Creates a random number for the cpu to select and makes sure the spot hasn't been taken yet
+     * @param board the 2D array that shows the game board
+     * @return the number of the position the cpu chose
+     */
     public int addCpuTurn(char[][] board){
         Random rand = new Random();
         int cpuPos = rand.nextInt(9) + 1;
@@ -117,6 +130,10 @@ public class TicTacToe {
         return cpuPos;
     }
 
+    /**
+     * Checks to see if there is a winner
+     * @return text that says which win condition was met
+     */
     public String checkWinner(){
 
         for(List<Integer> l : win){
@@ -133,16 +150,18 @@ public class TicTacToe {
         return "";
     }
 
+    /**
+     * Resets the game board and clears all stored positions
+     */
     public void resetGame(){
         playerPositions.clear();
         cpuPositions.clear();
-
     }
 
     public ArrayList<Integer> getPlayerPositions(){return playerPositions;}
     public ArrayList<Integer> getCpuPositions(){return cpuPositions;}
 
-
+    //Main method
     public static void main(String[] args){
 
         MyFrame frame = new MyFrame();

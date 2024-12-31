@@ -9,28 +9,31 @@ import java.awt.event.MouseListener;
 
 public class MyFrame extends JFrame implements MouseListener, ActionListener {
 
+    TicTacToe game;
     JPanel panel;
     JLabel label1, label2, label3,
             label4, label5, label6,
             label7, label8, label9;
-    TicTacToe game;
-    String winnerToPrint = "";
     char[][] board = {{' ', '|', ' ', '|', ' '},
             {'-', '+', '-', '|', '-'},
             {' ', '|', ' ', '|', ' '},
             {'-', '+', '-', '|', '-'},
             {' ', '|', ' ', '|', ' '}};
-    boolean gameOver = false;
     Font boardFont = new Font("Arial", Font.BOLD, 150);
     Font titleFont = new Font("Arial", Font.BOLD, 80);
     Font winFont = new Font("Arial", Font.BOLD, 50);
     JLabel bottomText;
     JButton restartButton;
+    boolean gameOver = false;
 
+    /**
+     * Class constructor
+     */
     public MyFrame(){
 
         game = new TicTacToe();
 
+        //set various frame parameters
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         this.setResizable(false);
         this.setTitle("Tic-Tac-Toe");
@@ -38,12 +41,15 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
 
+        //panel for the game board
         panel = new JPanel();
         panel.setLayout(new GridLayout(3,3,10,10));
         panel.setBackground(Color.black);
 
+        //creates labels 1-9 for the spaces on the game board
         createGridLabels();
 
+        //add mouse listener to each label
         label1.addMouseListener(this);
         label2.addMouseListener(this);
         label3.addMouseListener(this);
@@ -54,22 +60,27 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         label8.addMouseListener(this);
         label9.addMouseListener(this);
 
+        //panels for each margin
         JPanel left = new JPanel();
         JPanel right = new JPanel();
         JLabel top = new JLabel("Tic-Tac-Toe", JLabel.CENTER);
         JPanel bottom = new JPanel();
-        bottomText = new JLabel("", JLabel.CENTER);
-
         bottom.setLayout(new BorderLayout());
 
+        //initialize label for the displaying the win
+        bottomText = new JLabel("", JLabel.CENTER);
+
+        //set preferred sizes for each margin panel
         left.setPreferredSize(new Dimension(100,100));
         right.setPreferredSize(new Dimension(100,100));
         top.setPreferredSize(new Dimension(100,100));
         bottom.setPreferredSize(new Dimension(100,100));
 
+        //set fonts
         top.setFont(titleFont);
         bottomText.setFont(winFont);
 
+        //set restart button parameters
         restartButton = new JButton("Restart");
         restartButton.setFont(new Font("Arial", Font.BOLD, 30));
         restartButton.setFocusable(false);
@@ -78,20 +89,25 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         restartButton.setSize(100, 40);
         restartButton.addActionListener(this);
 
+        //add the text and button to the bottom panel
         bottom.add(bottomText, BorderLayout.NORTH);
         bottom.add(restartButton, BorderLayout.SOUTH);
 
+        //add each panel to the frame in their respective locations
         this.add(panel, BorderLayout.CENTER);
         this.add(left, BorderLayout.WEST);
         this.add(right, BorderLayout.EAST);
         this.add(top, BorderLayout.NORTH);
         this.add(bottom, BorderLayout.SOUTH);
 
-
-
+        //make sure the frame is visible
         this.setVisible(true);
     }
 
+    /**
+     * Displays an "O" onto the UI in whichever spot it selected
+     * @param pos the position the CPU selected
+     */
     public void displayCPU (int pos){
         switch(pos){
             case 1:
@@ -124,6 +140,13 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         }
     }
 
+    /**
+     * Places a piece on the UI and game board and checks if a win condition
+     * has been met so it can end the game. otherwise continue
+     * @param e the mouse event
+     * @param label the label to be compared/modified
+     * @param pos the position the player clicked on
+     */
     public void decideLabelForPosition(MouseEvent e, JLabel label, int pos){
         if(!gameOver && e.getSource() == label && !(game.getPlayerPositions().contains(pos) || game.getCpuPositions().contains(pos))){
             label.setText("X");
@@ -141,18 +164,32 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         }
     }
 
+    /**
+     * Turns the position gray when the player's mouse hovers over it
+     * @param e the mouse event
+     * @param label the label to be compared/modified
+     * @param pos the position the player is highlighted over
+     */
     public void decideLabelForHighlight(MouseEvent e, JLabel label, int pos){
         if(e.getSource() == label && !(game.getPlayerPositions().contains(pos) || game.getCpuPositions().contains(pos))){
             label.setBackground(Color.gray);
         }
     }
 
+    /**
+     * Turns the position back to white when the player's mouse stops hovering over it
+     * @param e the mouse event
+     * @param label the label to be compared/modified
+     */
     public void decideLabelForUnHighlight(MouseEvent e, JLabel label){
         if(e.getSource() == label){
             label.setBackground(Color.white);
         }
     }
 
+    /**
+     * Resets the UI to be blank and resets the game's stored values
+     */
     public void restartGame(){
         label1.setText("");
         label2.setText("");
@@ -174,6 +211,12 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
     @Override
     public void mouseClicked(MouseEvent e) {
 
+
+
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
         decideLabelForPosition(e, label1, 1);
         decideLabelForPosition(e, label2, 2);
         decideLabelForPosition(e, label3, 3);
@@ -183,12 +226,6 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         decideLabelForPosition(e, label7, 7);
         decideLabelForPosition(e, label8, 8);
         decideLabelForPosition(e, label9, 9);
-
-    }
-
-    @Override
-    public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
@@ -230,6 +267,9 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         }
     }
 
+    /**
+     * Initializes all board labels and sets some parameters for them
+     */
     public void createGridLabels(){
 
         label1 = new JLabel("", JLabel.CENTER);
