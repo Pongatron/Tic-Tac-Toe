@@ -8,8 +8,13 @@ import java.util.List;
 
 public class TicTacToe {
 
-    private static ArrayList<Integer> playerPositions = new ArrayList<>();
-    private static ArrayList<Integer> cpuPositions = new ArrayList<>();
+    private static ArrayList<Integer> playerPositions;
+    private static ArrayList<Integer> cpuPositions;
+
+    public TicTacToe(){
+        playerPositions = new ArrayList<>();
+        cpuPositions = new ArrayList<>();
+    }
 
     public static void printGameBoard(char[][] board){
 
@@ -104,12 +109,15 @@ public class TicTacToe {
         return "";
     }
 
+    public ArrayList<Integer> getPlayerPositions(){return playerPositions;}
+    public ArrayList<Integer> getCpuPositions(){return cpuPositions;}
+
 
     public static void main(String[] args){
 
         MyFrame frame = new MyFrame();
 
-        char[][] board = {{' ', '|', ' ', '|', ' '},
+       /* char[][] board = {{' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '|', '-'},
                 {' ', '|', ' ', '|', ' '},
                 {'-', '+', '-', '|', '-'},
@@ -146,6 +154,6 @@ public class TicTacToe {
                 System.out.println(checkWinner());
                 break;
             }
-        }
+        }*/
     }
 }

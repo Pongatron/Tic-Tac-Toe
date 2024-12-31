@@ -6,6 +6,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
+import java.util.Random;
+import java.util.Scanner;
 
 public class MyFrame extends JFrame implements MouseListener, ActionListener {
 
@@ -13,11 +15,14 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
     JLabel label1, label2, label3,
             label4, label5, label6,
             label7, label8, label9;
+    TicTacToe game;
 
     public MyFrame(){
 
+        game = new TicTacToe();
+
         this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(500,500);
+        this.setSize(800,800);
         this.setLayout(new BorderLayout());
         this.setLocationRelativeTo(null);
 
@@ -28,6 +33,14 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         createGridLabels();
 
         label1.addMouseListener(this);
+        label2.addMouseListener(this);
+        label3.addMouseListener(this);
+        label4.addMouseListener(this);
+        label5.addMouseListener(this);
+        label6.addMouseListener(this);
+        label7.addMouseListener(this);
+        label8.addMouseListener(this);
+        label9.addMouseListener(this);
 
         JPanel left = new JPanel();
         JPanel right = new JPanel();
@@ -56,9 +69,49 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
 
         //this.pack();
         this.setVisible(true);
+        runGame();
     }
 
+    public void runGame(){
+        char[][] board = {{' ', '|', ' ', '|', ' '},
+                {'-', '+', '-', '|', '-'},
+                {' ', '|', ' ', '|', ' '},
+                {'-', '+', '-', '|', '-'},
+                {' ', '|', ' ', '|', ' '}};
 
+        while(true){
+            Scanner k = new Scanner(System.in);
+            game.printGameBoard(board);
+            System.out.println("Choose spot on grid by typing a number 1 - 9");
+            int playerPos = k.nextInt();
+
+            //Checks for valid number
+            while(game.getPlayerPositions().contains(playerPos) || game.getCpuPositions().contains(playerPos)){
+                System.out.println("Position Taken!\nEnter a number between 1 - 9");
+                game.printGameBoard(board);
+                playerPos = k.nextInt();
+            }
+            game.placePiece(board, playerPos, "player");
+            if(!game.checkWinner().isEmpty()) {
+                game.printGameBoard(board);
+                System.out.println(game.checkWinner());
+                break;
+            }
+
+            Random rand = new Random();
+            int cpuPos = rand.nextInt(9) + 1;
+            while(game.getPlayerPositions().contains(cpuPos) || game.getCpuPositions().contains(cpuPos)){
+                cpuPos = rand.nextInt(9) + 1;
+            }
+            game.placePiece(board, cpuPos, "cpu");
+
+            if(!game.checkWinner().isEmpty()) {
+                game.printGameBoard(board);
+                System.out.println(game.checkWinner());
+                break;
+            }
+        }
+    }
 
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -80,12 +133,61 @@ public class MyFrame extends JFrame implements MouseListener, ActionListener {
         if(e.getSource() == label1){
             label1.setBackground(Color.gray);
         }
+        else if(e.getSource() == label2){
+            label2.setBackground(Color.gray);
+        }
+        else if(e.getSource() == label3){
+            label3.setBackground(Color.gray);
+        }
+        else if(e.getSource() == label4){
+            label4.setBackground(Color.gray);
+        }
+        else if(e.getSource() == label5){
+            label5.setBackground(Color.gray);
+        }
+        else if(e.getSource() == label6){
+            label6.setBackground(Color.gray);
+        }
+        else if(e.getSource() == label7){
+            label7.setBackground(Color.gray);
+        }
+        else if(e.getSource() == label8){
+            label8.setBackground(Color.gray);
+        }
+        else if(e.getSource() == label9){
+            label9.setBackground(Color.gray);
+        }
+
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
         if(e.getSource() == label1){
             label1.setBackground(Color.white);
+        }
+        else if(e.getSource() == label2){
+            label2.setBackground(Color.white);
+        }
+        else if(e.getSource() == label3){
+            label3.setBackground(Color.white);
+        }
+        else if(e.getSource() == label4){
+            label4.setBackground(Color.white);
+        }
+        else if(e.getSource() == label5){
+            label5.setBackground(Color.white);
+        }
+        else if(e.getSource() == label6){
+            label6.setBackground(Color.white);
+        }
+        else if(e.getSource() == label7){
+            label7.setBackground(Color.white);
+        }
+        else if(e.getSource() == label8){
+            label8.setBackground(Color.white);
+        }
+        else if(e.getSource() == label9){
+            label9.setBackground(Color.white);
         }
     }
 
