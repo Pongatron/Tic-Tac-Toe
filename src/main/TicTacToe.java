@@ -75,6 +75,17 @@ public class TicTacToe {
         }
     }
 
+    public int addCpuTurn(char[][] board){
+        Random rand = new Random();
+        int cpuPos = rand.nextInt(9) + 1;
+        while(getPlayerPositions().contains(cpuPos) || getCpuPositions().contains(cpuPos)){
+            cpuPos = rand.nextInt(9) + 1;
+        }
+        placePiece(board, cpuPos, "cpu");
+        printGameBoard(board);
+        return cpuPos;
+    }
+
     public static String checkWinner(){
         List topRow = Arrays.asList(1,2,3);
         List midRow = Arrays.asList(4,5,6);
