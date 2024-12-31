@@ -16,7 +16,7 @@ public class TicTacToe {
         cpuPositions = new ArrayList<>();
     }
 
-    public static void printGameBoard(char[][] board){
+    public void printGameBoard(char[][] board){
 
         //Prints out game board
         for(char[] row : board){
@@ -28,7 +28,7 @@ public class TicTacToe {
     }
 
 
-    public static void placePiece(char[][] board, int pos, String user){
+    public void placePiece(char[][] board, int pos, String user){
 
         char symbol = 'X';
 
@@ -86,7 +86,7 @@ public class TicTacToe {
         return cpuPos;
     }
 
-    public static String checkWinner(){
+    public String checkWinner(){
         List topRow = Arrays.asList(1,2,3);
         List midRow = Arrays.asList(4,5,6);
         List botRow = Arrays.asList(7,8,9);
